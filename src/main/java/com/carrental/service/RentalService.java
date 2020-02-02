@@ -2,6 +2,9 @@ package com.carrental.service;
 
 import com.carrental.crudRepository.RentalRepository;
 import com.carrental.domain.Rental;
+import com.carrental.exception.CarNotReturned;
+import com.carrental.exception.NotFoundException;
+import com.carrental.exception.RentalAlreadyPaid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +21,8 @@ public class RentalService {
         return rentalRepository.findAll();
     }
 
-    public Rental getRental(long rentalId) {
-        return rentalRepository.findById(rentalId).orElse(null);
+    public Rental getRental(long clientId, long carId) throws NotFoundException {
+        return rentalRepository.findByClientClientIdAndCarCarId(clientId, carId).orElseThrow(NotFoundException::new);
     }
 
     public void saveRental(Rental rental) {
@@ -31,7 +34,7 @@ public class RentalService {
     }
 
     public void returnCar(long clientId, long carId){
-        Rental rental = rentalRepository.findByClientClientIdAndCarCarId(clientId, carId);
+        Rental rental = rentalRepository.findByClientClientIdAndCarCarId(clientId, carId).orElse(null);
         Date borrowEndDate = new Date();
         rental.setBorrowEndDate(borrowEndDate);
         int rentalHours = (int) (borrowEndDate.getTime() - rental.getBorrowStartDate().getTime()) / 360000;
@@ -42,8 +45,8 @@ public class RentalService {
         rentalRepository.save(rental);
     }
 
-    public void rentalPaid(long clientId, long carId) {
-        Rental rental = rentalRepository.findByClientClientIdAndCarCarId(clientId, carId);
+    public void rentalPaid(long clientId, long carId) throws CarNotReturned, RentalAlreadyPaid {
+        Rental rental = rentalRepository.findByClientClientIdAndCarCarId(clientId, carId).orElse(null);
         Date paymentDay = new Date();
         rental.setPaidDay(paymentDay);
         rentalRepository.save(rental);

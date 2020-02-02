@@ -1,6 +1,7 @@
 package com.carrental.contoller;
 
 import com.carrental.dto.CarDto;
+import com.carrental.exception.NotFoundException;
 import com.carrental.mapper.CarMapper;
 import com.carrental.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class CarController {
     }
 
     @GetMapping(value = "getCar/{id}")
-    public CarDto getCar(@PathVariable("id") long carId) {
+    public CarDto getCar(@PathVariable("id") long carId) throws NotFoundException {
         return carMapper.mapToCarDto(carService.getCar(carId));
     }
 
