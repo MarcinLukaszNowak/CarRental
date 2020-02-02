@@ -43,4 +43,9 @@ public class RentalController {
     public void deleteRental(@PathVariable("id") long rentalId) {
         rentalService.deleteRental(rentalId);
     }
+
+    @PutMapping(value = "rentalPaid")
+    public void rentalPaid(@RequestParam long clientId, @RequestParam long carId) {
+        rentalService.rentalPaid(clientId, carId);
+    }
 }

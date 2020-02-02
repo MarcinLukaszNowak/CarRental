@@ -34,11 +34,18 @@ public class RentalService {
         Rental rental = rentalRepository.findByClientClientIdAndCarCarId(clientId, carId);
         Date borrowEndDate = new Date();
         rental.setBorrowEndDate(borrowEndDate);
-        int rentalHours = (int) ( borrowEndDate.getTime() - rental.getBorrowStartDate().getTime()) / 360000;
+        int rentalHours = (int) (borrowEndDate.getTime() - rental.getBorrowStartDate().getTime()) / 360000;
         double toPay = rental.getCar().getCarModel().getCostPerHour()
                 * (1 - rental.getCar().getAmount())
                 * rentalHours;
         rental.setToPay(toPay);
+        rentalRepository.save(rental);
+    }
+
+    public void rentalPaid(long clientId, long carId) {
+        Rental rental = rentalRepository.findByClientClientIdAndCarCarId(clientId, carId);
+        Date paymentDay = new Date();
+        rental.setPaidDay(paymentDay);
         rentalRepository.save(rental);
     }
 
