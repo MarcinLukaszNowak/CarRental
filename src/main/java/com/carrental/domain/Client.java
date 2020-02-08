@@ -1,5 +1,6 @@
 package com.carrental.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Entity(name = "clients")
@@ -31,10 +33,7 @@ public class Client {
     private String clientPhoneNumber;
 
     @Column(name = "clientRegistrationDate", updatable = false)
-    private String clientRegistrationDate;
-
-    @Column(name = "password")
-    private String password;
+    private Date clientRegistrationDate;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Rental> rentalList = new ArrayList<>();
@@ -45,6 +44,6 @@ public class Client {
         this.clientLastName = clientLastName;
         this.clientEmail = clientEmail;
         this.clientPhoneNumber = clientPhoneNumber;
-        this.clientRegistrationDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+        this.clientRegistrationDate = new Date();
     }
 }

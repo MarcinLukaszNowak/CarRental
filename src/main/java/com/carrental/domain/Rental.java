@@ -1,11 +1,14 @@
 package com.carrental.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Entity(name = "rentals")
@@ -16,44 +19,40 @@ public class Rental {
     private long rentalId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clientId", updatable = false)
+    @JoinColumn(name = "clientId", updatable = false, referencedColumnName = "clientId")
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "carId", updatable = false)
+    @JoinColumn(name = "carId", updatable = false, referencedColumnName = "carId")
     private Car car;
 
     @Column(updatable = false, columnDefinition = "DATETIME")
-    private Date borrowStartDate;
+    private Date rentalStartDate;
 
     @Column(columnDefinition = "DATETIME")
-    private Date borrowEndDate;
+    private Date rentalEndDate;
 
     @Column
     private double toPay;
 
     @Column
-    private Date paidDay;
+    private Date paymentDate;
 
-    public void setBorrowEndDate(Date borrowEndDate) {
-        this.borrowEndDate = borrowEndDate;
+    public void setRentalEndDate(Date rentalEndDate) {
+        this.rentalEndDate = rentalEndDate;
     }
 
     public void setToPay(double toPay) {
         this.toPay = toPay;
     }
 
-    public void setPaidDay(Date paidDay) {
-        this.paidDay = paidDay;
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
-    public Rental(long rentalId, Client client, Car car, Date borrowStartDate, Date borrowEndDate, double toPay, Date paidDay) {
-        this.rentalId = rentalId;
+    public Rental(Client client, Car car) {
         this.client = client;
         this.car = car;
-        this.borrowStartDate = new Date();
-        this.borrowEndDate = null;
-        this.toPay = 0;
-        this.paidDay = null;
+        this.rentalStartDate = new Date();
     }
 }

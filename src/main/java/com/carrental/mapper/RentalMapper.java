@@ -30,10 +30,10 @@ public class RentalMapper {
                 rentalDto.getRentalId(),
                 clientMapper.mapToClient(rentalDto.getClientDto()),
                 carMapper.mapToCar(rentalDto.getCarDto()),
-                rentalDto.getBorrowStartDate(),
-                rentalDto.getBorrowEndDate(),
+                rentalDto.getRentalStartDate(),
+                rentalDto.getRentalEndDate(),
                 rentalDto.getToPay(),
-                rentalDto.getPaidDay()
+                rentalDto.getPaymentDate()
         );
     }
 
@@ -42,10 +42,10 @@ public class RentalMapper {
                 rental.getRentalId(),
                 clientMapper.mapToClientDto(rental.getClient()),
                 carMapper.mapToCarDto(rental.getCar()),
-                rental.getBorrowStartDate(),
-                rental.getBorrowEndDate(),
+                rental.getRentalStartDate(),
+                rental.getRentalEndDate(),
                 rental.getToPay(),
-                rental.getPaidDay()
+                rental.getPaymentDate()
         );
     }
 

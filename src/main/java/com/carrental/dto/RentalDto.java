@@ -8,12 +8,11 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 public class RentalDto {
-
     private long rentalId;
     private ClientDto clientDto;
     private CarDto carDto;
-    private Date borrowStartDate;
-    private Date borrowEndDate;
+    private Date rentalStartDate;
+    private Date rentalEndDate;
     private double toPay;
-    private Date paidDay;
+    private Date paymentDate;
 }

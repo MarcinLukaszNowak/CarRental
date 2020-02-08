@@ -34,13 +34,8 @@ public class RentalController {
     }
 
     @PostMapping(value = "addRental")
-    public void addRental(@RequestBody RentalDto rentalDto) {
-        rentalService.saveRental(rentalMapper.mapToRental(rentalDto));
-    }
-
-    @PutMapping(value = "updateRental")
-    public void updateRental(@RequestBody RentalDto rentalDto) {
-        rentalService.saveRental(rentalMapper.mapToRental(rentalDto));
+    public void addRental(@RequestParam long clientId,@RequestParam long carId) throws NotFoundException{
+        rentalService.saveRental(clientId, carId);
     }
 
     @PutMapping(value = "returnCar")
@@ -53,17 +48,17 @@ public class RentalController {
         rentalService.deleteRental(rentalId);
     }
 
-    @PutMapping(value = "rentalPaid")
-    public void rentalPaid(@RequestParam long clientId, @RequestParam long carId) throws CarNotReturned, RentalAlreadyPaid, NotFoundException {
+    @PutMapping(value = "payForRental")
+    public void payForRental(@RequestParam long clientId, @RequestParam long carId) throws CarNotReturned, RentalAlreadyPaid, NotFoundException {
         try {
-            if(rentalService.getRental(clientId, carId).getBorrowEndDate() == null){
+            if(rentalService.getRental(clientId, carId).getRentalEndDate() == null){
                 throw new CarNotReturned();
-            } else if(rentalService.getRental(clientId, carId).getPaidDay() != null){
+            } else if(rentalService.getRental(clientId, carId).getPaymentDate() != null){
                 throw new RentalAlreadyPaid();
             } else {
-                rentalService.rentalPaid(clientId, carId);
+                rentalService.payForRental(clientId, carId);
             }
-        } catch (NotFoundException e) {
+        } catch(NotFoundException e) {
             throw e;
         }
     }

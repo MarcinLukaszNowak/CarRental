@@ -1,6 +1,10 @@
 package com.carrental.service;
 
+import com.carrental.crudRepository.CarRepository;
+import com.carrental.crudRepository.ClientRepository;
 import com.carrental.crudRepository.RentalRepository;
+import com.carrental.domain.Car;
+import com.carrental.domain.Client;
 import com.carrental.domain.Rental;
 import com.carrental.exception.CarNotReturned;
 import com.carrental.exception.NotFoundException;
@@ -17,6 +21,12 @@ public class RentalService {
     @Autowired
     private RentalRepository rentalRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private CarRepository carRepository;
+
     public List<Rental> getAllRentals() {
         return rentalRepository.findAll();
     }
@@ -25,7 +35,10 @@ public class RentalService {
         return rentalRepository.findByClientClientIdAndCarCarId(clientId, carId).orElseThrow(NotFoundException::new);
     }
 
-    public void saveRental(Rental rental) {
+    public void saveRental(long clientId, long carId) throws NotFoundException{
+        Client client = clientRepository.findById(clientId).orElseThrow(NotFoundException::new);
+        Car car = carRepository.findById(carId).orElseThrow(NotFoundException::new);
+        Rental rental = new Rental(client, car);
         rentalRepository.save(rental);
     }
 
@@ -35,9 +48,9 @@ public class RentalService {
 
     public void returnCar(long clientId, long carId){
         Rental rental = rentalRepository.findByClientClientIdAndCarCarId(clientId, carId).orElse(null);
-        Date borrowEndDate = new Date();
-        rental.setBorrowEndDate(borrowEndDate);
-        int rentalHours = (int) (borrowEndDate.getTime() - rental.getBorrowStartDate().getTime()) / 360000;
+        Date rentalEndDate = new Date();
+        rental.setRentalEndDate(rentalEndDate);
+        int rentalHours = (int) (rentalEndDate.getTime() - rental.getRentalStartDate().getTime()) / 360000;
         double toPay = rental.getCar().getCarModel().getCostPerHour()
                 * (1 - rental.getCar().getAmount())
                 * rentalHours;
@@ -45,10 +58,10 @@ public class RentalService {
         rentalRepository.save(rental);
     }
 
-    public void rentalPaid(long clientId, long carId) throws CarNotReturned, RentalAlreadyPaid {
+    public void payForRental(long clientId, long carId) throws CarNotReturned, RentalAlreadyPaid {
         Rental rental = rentalRepository.findByClientClientIdAndCarCarId(clientId, carId).orElse(null);
-        Date paymentDay = new Date();
-        rental.setPaidDay(paymentDay);
+        Date paymentDate = new Date();
+        rental.setPaymentDate(paymentDate);
         rentalRepository.save(rental);
     }
 
