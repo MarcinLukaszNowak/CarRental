@@ -1,9 +1,11 @@
 package com.carrental.contoller;
 
+import com.carrental.domain.Client;
 import com.carrental.dto.ClientDto;
 import com.carrental.mapper.ClientMapper;
 import com.carrental.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,14 +32,14 @@ public class ClientController {
         return clientMapper.mapToClientDto((clientService.getClient(clientId)));
     }
 
-    @PostMapping(value = "addClient", consumes = APPLICATION_JSON_VALUE)
-    public void addClient(@RequestBody ClientDto clientDto, String password) {
-        clientService.saveClient(clientMapper.mapToClient(clientDto));
+    @PostMapping(value = "addClient")
+    public void addClient(@RequestParam String name, @RequestParam String lastName, @RequestParam String email, @RequestParam String phoneNumber) {
+        clientService.saveClient(name, lastName, email, phoneNumber);
     }
 
     @PutMapping(value = "updateClient")
     public void updateClient(@RequestBody ClientDto clientDto) {
-        clientService.saveClient(clientMapper.mapToClient(clientDto));
+        clientService.updateClient(clientMapper.mapToClient(clientDto));
     }
 
     @DeleteMapping(value = "deleteClient/{id}")

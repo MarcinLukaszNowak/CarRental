@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,12 +37,11 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Rental> rentalList = new ArrayList<>();
 
-    public Client(long clientId, String clientFirstName, String clientLastName, String clientEmail, String clientPhoneNumber) {
-        this.clientId = clientId;
+    public Client(String clientFirstName, String clientLastName, String clientEmail, String clientPhoneNumber, Date clientRegistrationDate) {
         this.clientFirstName = clientFirstName;
         this.clientLastName = clientLastName;
         this.clientEmail = clientEmail;
         this.clientPhoneNumber = clientPhoneNumber;
-        this.clientRegistrationDate = new Date();
+        this.clientRegistrationDate = clientRegistrationDate;
     }
 }

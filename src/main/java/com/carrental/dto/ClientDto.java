@@ -3,6 +3,8 @@ package com.carrental.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @Getter
 public class ClientDto {
@@ -12,5 +14,5 @@ public class ClientDto {
     private String clientLastName;
     private String clientEmail;
     private String clientPhoneNumber;
-    private String clientRegistrationDate;
+    private Date clientRegistrationDate;
 }

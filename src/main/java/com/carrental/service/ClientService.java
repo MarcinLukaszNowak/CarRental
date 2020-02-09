@@ -5,6 +5,7 @@ import com.carrental.domain.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,7 +22,13 @@ public class ClientService {
         return clientRepository.findById(clientId).orElse(null);
     }
 
-    public void saveClient(Client client) {
+    public void saveClient(String clientName, String clientLastName, String clientEmail, String clientPhoneNumber) {
+        Date clientRegistrationDate = new Date();
+        Client client = new Client(clientName, clientLastName, clientEmail, clientPhoneNumber, clientRegistrationDate);
+        clientRepository.save(client);
+    }
+
+    public void updateClient(Client client) {
         clientRepository.save(client);
     }
 

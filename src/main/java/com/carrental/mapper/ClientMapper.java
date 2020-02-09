@@ -1,9 +1,11 @@
 package com.carrental.mapper;
 
 import com.carrental.domain.Client;
+import com.carrental.domain.Rental;
 import com.carrental.dto.ClientDto;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +18,9 @@ public class ClientMapper {
                 clientDto.getClientFirstName(),
                 clientDto.getClientLastName(),
                 clientDto.getClientEmail(),
-                clientDto.getClientPhoneNumber()
+                clientDto.getClientPhoneNumber(),
+                clientDto.getClientRegistrationDate(),
+                new ArrayList<>()
         );
     }
 
