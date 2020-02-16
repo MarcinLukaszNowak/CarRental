@@ -32,7 +32,7 @@ public class Car {
     private String reasonOfAmount;
 
     @Column
-    private String productionYear;
+    private int productionYear;
 
     @Column
     private String color;
@@ -44,4 +44,12 @@ public class Car {
     @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
     private List<Rental> rentalList = new ArrayList<>();
 
+    public Car(CarModel carModel, double amount, String reasonOfAmount, int productionYear, String color, CarStatus carStatus) {
+        this.carModel = carModel;
+        this.amount = amount;
+        this.reasonOfAmount = reasonOfAmount;
+        this.productionYear = productionYear;
+        this.color = color;
+        this.carStatus = carStatus;
+    }
 }

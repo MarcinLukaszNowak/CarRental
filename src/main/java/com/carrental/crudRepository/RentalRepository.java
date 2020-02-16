@@ -1,6 +1,7 @@
 package com.carrental.crudRepository;
 
 import com.carrental.domain.Rental;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

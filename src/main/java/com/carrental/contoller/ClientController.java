@@ -33,8 +33,11 @@ public class ClientController {
     }
 
     @PostMapping(value = "addClient")
-    public void addClient(@RequestParam String name, @RequestParam String lastName, @RequestParam String email, @RequestParam String phoneNumber) {
-        clientService.saveClient(name, lastName, email, phoneNumber);
+    public void addClient(@RequestParam String name,
+                          @RequestParam String lastName,
+                          @RequestParam String email,
+                          @RequestParam String phoneNumber) {
+        clientService.addClient(name, lastName, email, phoneNumber);
     }
 
     @PutMapping(value = "updateClient")

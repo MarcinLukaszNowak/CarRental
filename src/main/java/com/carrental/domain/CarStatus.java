@@ -16,7 +16,7 @@ public class CarStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int carStatusId;
+    private long carStatusId;
 
     @Column
     private String carStatusDescription;

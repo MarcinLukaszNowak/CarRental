@@ -22,7 +22,7 @@ public class ClientService {
         return clientRepository.findById(clientId).orElse(null);
     }
 
-    public void saveClient(String clientName, String clientLastName, String clientEmail, String clientPhoneNumber) {
+    public void addClient(String clientName, String clientLastName, String clientEmail, String clientPhoneNumber) {
         Date clientRegistrationDate = new Date();
         Client client = new Client(clientName, clientLastName, clientEmail, clientPhoneNumber, clientRegistrationDate);
         clientRepository.save(client);

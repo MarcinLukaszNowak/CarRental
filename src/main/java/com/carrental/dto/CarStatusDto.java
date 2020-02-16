@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class CarStatusDto {
 
-    private int CarStatusId;
+    private long CarStatusId;
     private String CarStatusDescription;
 }

@@ -35,7 +35,7 @@ public class RentalService {
         return rentalRepository.findByClientClientIdAndCarCarId(clientId, carId).orElseThrow(NotFoundException::new);
     }
 
-    public void saveRental(long clientId, long carId) throws NotFoundException{
+    public void addRental(long clientId, long carId) throws NotFoundException{
         Client client = clientRepository.findById(clientId).orElseThrow(NotFoundException::new);
         Car car = carRepository.findById(carId).orElseThrow(NotFoundException::new);
         Rental rental = new Rental(client, car);
@@ -64,6 +64,5 @@ public class RentalService {
         rental.setPaymentDate(paymentDate);
         rentalRepository.save(rental);
     }
-
 
 }

@@ -30,13 +30,24 @@ public class CarController {
     }
 
     @PostMapping(value = "addCar")
-    public void addCar(@RequestBody CarDto carDto) {
-        carService.saveCar(carMapper.mapToCar(carDto));
+    public void addCar(@RequestParam long carModelId,
+                       @RequestParam double amount,
+                       @RequestParam String reasonOfAmount,
+                       @RequestParam int productionYear,
+                       @RequestParam String color,
+                       @RequestParam long carStatusId) throws NotFoundException {
+        carService.addCar(carModelId, amount, reasonOfAmount, productionYear, color, carStatusId);
     }
 
-    @PutMapping(value = "updateCar")
-    public void updateCar(@RequestBody CarDto carDto) {
-        carService.saveCar(carMapper.mapToCar(carDto));
+    @PutMapping(value = "updateCar/{id}")
+    public void updateCar(@PathVariable("id") long carId,
+                          @RequestParam long carModelId,
+                          @RequestParam double amount,
+                          @RequestParam String reasonOfAmount,
+                          @RequestParam int productionYear,
+                          @RequestParam String color,
+                          @RequestParam long carStatusId) throws NotFoundException {
+        carService.updateCar(carId, carModelId, amount, reasonOfAmount, productionYear, color, carStatusId);
     }
 
     @DeleteMapping(value = "deleteCar/{id}")
@@ -44,4 +55,8 @@ public class CarController {
         carService.deleteCar(carId);
     }
 
+    @GetMapping(value = "mostPopularCar")
+    public CarDto mostPopularCar() throws NotFoundException {
+       return carMapper.mapToCarDto(carService.mostPopularCar());
+    }
 }

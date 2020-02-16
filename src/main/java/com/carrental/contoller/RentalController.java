@@ -29,17 +29,20 @@ public class RentalController {
     }
 
     @GetMapping(value = "GetRental/{clientId}/{rentalId}")
-    public RentalDto getRental(@PathVariable("clientId") long clientId, @PathVariable("rentalId") long carId) throws NotFoundException{
+    public RentalDto getRental(@PathVariable("clientId") long clientId,
+                               @PathVariable("rentalId") long carId) throws NotFoundException{
         return rentalMapper.mapToRentalDto(rentalService.getRental(clientId, carId));
     }
 
     @PostMapping(value = "addRental")
-    public void addRental(@RequestParam long clientId,@RequestParam long carId) throws NotFoundException{
-        rentalService.saveRental(clientId, carId);
+    public void addRental(@RequestParam long clientId,
+                          @RequestParam long carId) throws NotFoundException{
+        rentalService.addRental(clientId, carId);
     }
 
     @PutMapping(value = "returnCar")
-    public void returnCar(@RequestParam long clientId, @RequestParam long carId){
+    public void returnCar(@RequestParam long clientId,
+                          @RequestParam long carId){
         rentalService.returnCar(clientId, carId);
     }
 
@@ -49,7 +52,8 @@ public class RentalController {
     }
 
     @PutMapping(value = "payForRental")
-    public void payForRental(@RequestParam long clientId, @RequestParam long carId) throws CarNotReturned, RentalAlreadyPaid, NotFoundException {
+    public void payForRental(@RequestParam long clientId,
+                             @RequestParam long carId) throws CarNotReturned, RentalAlreadyPaid, NotFoundException {
         try {
             if(rentalService.getRental(clientId, carId).getRentalEndDate() == null){
                 throw new CarNotReturned();
